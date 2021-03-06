@@ -1,2 +1,2 @@
-# twitter-mail-poster
-Post tweets to mail (blog) daily.
+# twitter-to-hatena
+Post tweets to hatena blog with photos, tags.
