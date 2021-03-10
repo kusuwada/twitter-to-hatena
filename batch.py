@@ -5,6 +5,8 @@ import argparse
 import daily
 from util import Util
 
+SLEEP = 1
+
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='export tweet to hatena.')
 	parser.add_argument('start', help='start date to export. [YYYY-MM-DD]')
@@ -19,3 +21,4 @@ if __name__ == "__main__":
 	ut = Util()
 	for date in ut.daterange_to_list(args.start, args.end):
 		daily.daily(date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
+		time.sleep(SLEEP)

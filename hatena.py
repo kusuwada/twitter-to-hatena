@@ -123,6 +123,6 @@ class Hatena:
 	def post_entry(self, entry):
 		url = self.root_endpoint + '/entry'
 		res = requests.post(url, data=entry, headers={'X-WSSE': self.wsse})
-		logger.debug('-------------[response]---------------')
-		logger.debug(res.text)
+		logger.info('-------------[response]---------------')
+		logger.info(res.text)
 		return
