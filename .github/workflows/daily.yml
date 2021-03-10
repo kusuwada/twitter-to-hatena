@@ -18,12 +18,11 @@ jobs:
     steps:
       - name: Get Time
         id: date
-        run: echo "::set-output name=DATE::$(date --date '1 day ago' +'%Y-%m-%d')"
-        # run: echo "DATE::$(date --date '1 day ago' +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: echo "DATE::$(date --date '1 day ago' +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Chekout
         uses: actions/checkout@v2
       - name: Set up Python
-        uses: actions/setup-python@v1.1.1
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
       - name: Run Main
@@ -34,5 +33,4 @@ jobs:
           export TW_ATS=${{ secrets.TW_ATS }}
           export HT_KEY=${{ secrets.HT_KEY }}          
           pip install -r requests.txt
-          #python daily.py $DATE $TW_UNAME $HT_ID $HT_ROOT ${{ runner.temp }} --tz=$TZ
-          python daily.py ${{ steps.date.outputs.DATE }} $TW_UNAME $HT_ID $HT_ROOT ${{ runner.temp }} --tz=$TZ
+          python daily.py $DATE $TW_UNAME $HT_ID $HT_ROOT ${{ runner.temp }} --tz=$TZ
