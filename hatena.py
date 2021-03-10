@@ -129,5 +129,5 @@ class Hatena:
 			logger.info(res.status_code)
 			logger.info(res.text)
 		if res.status_code == requests.codes.bad_request and 'Entry limit was exceeded' in res.text:
-			rasie(RequestExceededError)
+			raise(RequestExceededError)
 		return
