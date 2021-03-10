@@ -2,13 +2,13 @@
 # -*- coding:utf-8 -*-
 
 import os
+import sys
 import argparse
 import glob
 from logging import basicConfig, getLogger, INFO
 from twitter import Twitter
 from hatena import Hatena
 from util import Util
-from exception import RequestExceededError
 
 basicConfig(level=INFO)
 logger = getLogger(__name__)
@@ -58,3 +58,4 @@ if __name__ == "__main__":
 		daily(args.date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
 	except Exception as e:
 		logger.error(e)
+		sys.exit(1)

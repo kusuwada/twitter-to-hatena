@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
+import sys
 import argparse
 import daily
+from logging import basicConfig, getLogger, INFO
 from util import Util
+from exception import RequestExceededError
 
-SLEEP = 1
+basicConfig(level=INFO)
+logger = getLogger(__name__)
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='export tweet to hatena.')
@@ -24,6 +28,6 @@ if __name__ == "__main__":
 			daily.daily(date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
 		except RequestExceededError as e:
 			logger.error(e)
-			break
+			sys.exit(1)
 		except Exception as e:
 			logger.error(e)

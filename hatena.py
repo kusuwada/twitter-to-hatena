@@ -68,12 +68,16 @@ class Hatena:
 	def parse_hashtag(self, text):
 		return [w[1:] for w in text.split() if w.startswith("#") ]
 	
+	def escape_hashtag(self, text):
+		return text.replace('#', '\#')
+	
 	def create_entry_content(self, tweets, medias):
 		ut = Util()
 		body = ''
 		tags = []
 		for tweet in tweets:
-			text = tweet['text']
+			tags += self.parse_hashtag(tweet['text'])
+			text = self.escape_hashtag(tweet['text'])
 			utc_time = tweet['created_at']
 			local_time = ut.utc_str_to_local(utc_time)			
 			
@@ -82,7 +86,6 @@ class Hatena:
 				for media_key in tweet['attachments']['media_keys']:
 					body += '\n[' + medias[media_key]  +  ']\n'
 			body += '\n <font size="1" color="#c0c0c0">' + local_time.strftime("%d %B %Y %H:%M") + '</font>\n\n'
-			tags += self.parse_hashtag(text)
 		return body, tags
 				
 	def create_entry_payload(self, date, tweets, medias):
@@ -124,10 +127,10 @@ class Hatena:
 	def post_entry(self, entry):
 		url = self.root_endpoint + '/entry'
 		res = requests.post(url, data=entry, headers={'X-WSSE': self.wsse})
-		if res.status_code != requests.codes.ok:
+		if res.status_code != requests.codes.created:
 			logger.info('-------------[entry post response]---------------')
 			logger.info(res.status_code)
 			logger.info(res.text)
 		if res.status_code == requests.codes.bad_request and 'Entry limit was exceeded' in res.text:
-			raise(RequestExceededError)
+			raise RequestExceededError('Hatena Entry limit was exceeded.')
 		return
