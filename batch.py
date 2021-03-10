@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 
 import argparse
-import time
 import daily
 from util import Util
 
@@ -21,5 +20,10 @@ if __name__ == "__main__":
 	
 	ut = Util()
 	for date in ut.daterange_to_list(args.start, args.end):
-		daily.daily(date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
-		time.sleep(SLEEP)
+		try:
+			daily.daily(date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
+		except RequestExceededError as e:
+			logger.error(e)
+			break
+		except Exception as e:
+			logger.error(e)

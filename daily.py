@@ -8,6 +8,7 @@ from logging import basicConfig, getLogger, INFO
 from twitter import Twitter
 from hatena import Hatena
 from util import Util
+from exception import RequestExceededError
 
 basicConfig(level=INFO)
 logger = getLogger(__name__)
@@ -37,8 +38,10 @@ def daily(date, tw_id, ht_id, ht_host, work_dir, tz='Etc/UTC'):
 	ht = Hatena(ht_id, ht_host)
 	ht.auth()
 	entry = ht.create_entry(date, tw_list_sorted, media_path)
-	ht.post_entry(entry)
-
+	try:
+		ht.post_entry(entry)
+	except Exception as e:
+		raise(e)
 	logger.info('[EXPORTED]' + date)
 
 if __name__ == "__main__":	
@@ -51,4 +54,7 @@ if __name__ == "__main__":
 	parser.add_argument('--tz', help='timezone')
 	args = parser.parse_args()
 	
-	daily(args.date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
+	try:
+		daily(args.date, args.tw_id, args.ht_id, args.ht_host, args.work_dir, args.tz)
+	except Exception as e:
+		logger.error(e)

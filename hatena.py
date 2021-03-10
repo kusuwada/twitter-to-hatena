@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 from logging import getLogger
 from datetime import datetime
 from util import Util
+from exception import RequestExceededError
 
 logger = getLogger(__name__)
 
@@ -123,6 +124,10 @@ class Hatena:
 	def post_entry(self, entry):
 		url = self.root_endpoint + '/entry'
 		res = requests.post(url, data=entry, headers={'X-WSSE': self.wsse})
-		logger.info('-------------[response]---------------')
-		logger.info(res.text)
+		if res.status_code != requests.codes.ok:
+			logger.info('-------------[entry post response]---------------')
+			logger.info(res.status_code)
+			logger.info(res.text)
+		if res.status_code == requests.codes.bad_request and 'Entry limit was exceeded' in res.text:
+			rasie(RequestExceededError)
 		return
