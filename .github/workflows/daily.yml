@@ -17,8 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Time
-        id: date
-        run: echo "DATE::$(date --date '1 day ago' +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: echo "DATE=$(date --date '1 day ago' +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Chekout
         uses: actions/checkout@v2
       - name: Set up Python
