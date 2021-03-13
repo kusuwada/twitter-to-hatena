@@ -35,5 +35,5 @@ jobs:
           export TW_AT=${{ secrets.TW_AT }}
           export TW_ATS=${{ secrets.TW_ATS }}
           export HT_KEY=${{ secrets.HT_KEY }} 
-          pip install -r requests.txt
+          pip install -r requirements.txt
           python batch.py ${{ github.event.inputs.start }} ${{ github.event.inputs.end }} $TW_UNAME $HT_ID $HT_ROOT ${{ runner.temp }} --tz=$TZ
