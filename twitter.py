@@ -54,7 +54,7 @@ class Twitter:
 		ut = Util()
 		filepath = media_path
 		for media in medias:
-			extension = media['url'].split('.')[-1]
 			if media['type'] == 'photo':  # only photo
+				extension = media['url'].split('.')[-1]
 				ut.media_download(media['url'], filepath, media['media_key'] + '.' + extension)
 		return
