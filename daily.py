@@ -27,11 +27,14 @@ def daily(date, tw_id, ht_id, ht_host, work_dir, tz='Etc/UTC'):
 	tw.auth()
 	tw.get_user_id(tw_id)
 	tw_data = tw.list_daily(date)
+	print(tw_data)
 	if tw_data['meta']['result_count'] == 0:
 		logger.info('[NO POST]' + date)
 		return
 	if 'includes' in tw_data.keys() and 'media' in tw_data['includes'].keys():
 		tw.download_medias(tw_data['includes']['media'], media_path)
+	logger.info('[INFO] finish twitter data fetch.')
+	print(tw_data['data'])
 	
 	## post to hatena
 	tw_list_sorted = sorted(tw_data['data'], key=lambda x: x['id'])
