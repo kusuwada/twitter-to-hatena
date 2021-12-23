@@ -27,6 +27,7 @@ def daily(date, tw_id, ht_id, ht_host, work_dir, tz='Etc/UTC'):
 	tw.auth()
 	tw.get_user_id(tw_id)
 	tw_data = tw.list_daily(date)
+	print(tw_data)
 	if tw_data['meta']['result_count'] == 0:
 		logger.info('[NO POST]' + date)
 		return
