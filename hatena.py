@@ -50,7 +50,10 @@ class Hatena:
 	
 	def upload_media(self, filepath, media_key):
 		path = filepath + os.sep + media_key
-		filename = glob.glob(path + '.*')[0]
+		try:
+			filename = glob.glob(path + '.*')[0]
+		except:
+			return None
 		with open(filename, 'rb') as f:
 			image_data = f.read()
 		content = base64.b64encode(image_data).decode('utf-8')
@@ -84,8 +87,7 @@ class Hatena:
 			body += text + '\n'
 			if 'attachments' in tweet.keys() and 'media_keys' in tweet['attachments'].keys():
 				for media_key in tweet['attachments']['media_keys']:
-					if media_key in medias:
-						body += '\n[' + medias[media_key]  +  ']\n'
+					body += '\n[' + medias[media_key]  +  ']\n'
 			body += '\n <font size="1" color="#c0c0c0">' + local_time.strftime("%d %B %Y %H:%M") + '</font>\n\n'
 		return body, tags
 				
@@ -119,9 +121,9 @@ class Hatena:
 		for tweet in tweets:
 			if 'attachments' in tweet.keys() and 'media_keys' in tweet['attachments'].keys():
 				for media_key in tweet['attachments']['media_keys']:
-					if media_key in medias:
 					filepath = media_path
-						media_entry = self.upload_media(filepath, media_key)
+					media_entry = self.upload_media(filepath, media_key)
+					if not media_entry == None:
 						media_syntax = self.parse_media_syntax_from_xml(media_entry)
 						medias[media_key] = media_syntax
 		return self.create_entry_payload(date, tweets, medias)		
