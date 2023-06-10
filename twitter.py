@@ -30,7 +30,7 @@ class Twitter:
 		uri = 'https://api.twitter.com/2/users/by/username/' + username
 		res = requests.get(uri, auth=self.access_token)
 		logger.info('Get User ID')
-		logger.info(res)
+		logger.info(json.loads(res.text))
 		self.user_id = json.loads(res.text)['data']['id']
 		return self.user_id
 	
