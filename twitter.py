@@ -53,6 +53,8 @@ class Twitter:
 	def download_medias(self, medias, media_path):
 		ut = Util()
 		filepath = media_path
+		logger.info(filepath)
+		logger.info(medias)
 		for media in medias:
 			if media['type'] == 'photo':  # only photo
 				extension = media['url'].split('.')[-1]
