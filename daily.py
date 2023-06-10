@@ -23,9 +23,14 @@ def daily(date, tw_id, ht_id, ht_host, work_dir, tz='Etc/UTC'):
 	logger.info('[START]' + date)
 	
 	## get tweets from twitter
-	tw = Twitter()
-	tw.auth()
-	tw.get_user_id(tw_id)
+	try:
+		tw = Twitter()
+		tw.auth()
+		tw.get_user_id(tw_id)
+	except Exception as e:
+		logger.error('ERROR in Twitter')
+		logger.error(e)
+		raise(e)
 	tw_data = tw.list_daily(date)
 	logger.info(tw_data)
 	if tw_data['meta']['result_count'] == 0:
