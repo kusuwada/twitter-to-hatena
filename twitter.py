@@ -21,8 +21,7 @@ class Twitter:
 	def __init__(self):
 		self.user_id = None
 		self.access_token = None
-		logger.info(os.environ['TW_API_KEY'], os.environ['TW_API_KEY_SECRET'], os.environ['TW_CLIENT_ID'], os.environ['TW_CLIENT_SECRET'])
-	
+
 	def auth(self):
 		self.access_token = OAuth1(os.environ['TW_API_KEY'], os.environ['TW_API_KEY_SECRET'], os.environ['TW_CLIENT_ID'], os.environ['TW_CLIENT_SECRET'])
 		return
