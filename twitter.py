@@ -7,7 +7,7 @@ import json
 import urllib
 from logging import getLogger
 from datetime import timedelta
-from requests_oauthlib import OAuth1Session
+from requests_oauthlib import OAuth1
 from util import Util
 
 logger = getLogger(__name__)
@@ -23,8 +23,8 @@ class Twitter:
 		self.access_token = None
 
 	def auth(self):
-		self.access_token = OAuth1Session(os.environ['TW_API_KEY'], os.environ['TW_API_KEY_SECRET'], os.environ['TW_CLIENT_ID'], os.environ['TW_CLIENT_SECRET'])
-		# self.access_token = OAuth1(os.environ['TW_API_KEY'], os.environ['TW_API_KEY_SECRET'], os.environ['TW_CLIENT_ID'], os.environ['TW_CLIENT_SECRET'])
+		#self.access_token = OAuth1Session(os.environ['TW_API_KEY'], os.environ['TW_API_KEY_SECRET'], os.environ['TW_CLIENT_ID'], os.environ['TW_CLIENT_SECRET'])
+		self.access_token = OAuth1(os.environ['TW_API_KEY'], os.environ['TW_API_KEY_SECRET'], os.environ['TW_CLIENT_ID'], os.environ['TW_CLIENT_SECRET'])
 		return
 	
 	def get_user_id(self, username):
