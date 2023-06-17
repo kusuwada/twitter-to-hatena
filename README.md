@@ -1,3 +1,5 @@
+# !!!! This program is can't be used on Twitter Free Plan from 2023/3 !!!!
+
 # twitter-to-hatena
 
 Post tweets to hatena blog with photos, tags.
